@@ -1,20 +1,28 @@
 const main = document.getElementById('modal_main');
 const close = document.getElementsByClassName('modal__close');
 const success = document.getElementById('modal_success');
-const button = document.getElementsByClassName("show-success")[0];
+
 
 main.classList.add('modal_active');
 
-close[0].onclick = () => {
-    main.classList.remove('modal_active');
+
+for (i = 0; i < close.length; i++) {
+    close[i].classList.add('modal_active');
+    if (close[i].classList.contains('show-success')) {
+        close[i].onclick = ModalSuccess;
+    } else {
+        close[i].onclick = CloseActive;
+    }
 }
 
-button.onclick = () => {
+
+function ModalSuccess() {
     main.classList.remove('modal_active');
-    success.classList.add('modal_active')
+    success.classList.add('modal_active');
 }
 
-close[2].onclick = () => {
+
+function CloseActive() {
+    main.classList.remove('modal_active');
     success.classList.remove('modal_active');
-    main.classList.remove('modal_active');
 }

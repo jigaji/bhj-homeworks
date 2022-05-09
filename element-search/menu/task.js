@@ -1,28 +1,24 @@
-let menus = document.getElementsByClassName('menu_main');
+const menu_link = document.getElementsByClassName('menu__link');
 
-for (let menu of menus) {
-    let items = menu.querySelectorAll('ul.menu_main li.menu__item');
-    for (let item of items) {
-        let subMenus = item.querySelectorAll('ul.menu_sub');
-        for (let subMenu of subMenus) {
-            item.onclick = () => {
-                if (subMenu.classList.contains('menu_active')) {
-                    clear(menu);
-                    return false;
-                }
-                else {
-                    clear(menu);
-                    subMenu.classList.add('menu_active');
-                    return false;
-                }
-            };
-        }
-    }
-}
+for (let l of Array.from(menu_link))
+  l.onclick = function() {
+    
+    const mainMenu = this.closest('ul');
+    const subMenu = this.parentElement.querySelector('.menu_sub');
+    
+    if (!subMenu) 
+      return true;
 
-function clear(menu) {
-    let activeSubMenus = menu.querySelectorAll('ul.menu_active li.menu__item');
-    for(let activeSubMenu of activeSubMenus) {
-        activeSubMenu.parentElement.classList.remove('menu_active');
-    }
-}
+    if (mainMenu.className === 'menu menu_main') {
+      const activeMenu = mainMenu.querySelector('.menu_active');
+      if (activeMenu && (activeMenu !== subMenu)) 
+        activeMenu.className = 'menu menu_sub';
+    }    
+    
+    if (subMenu.className === 'menu menu_sub') 
+      subMenu.className = 'menu menu_sub menu_active';
+    else
+      subMenu.className = 'menu menu_sub';   
+    return false;
+       
+  }
